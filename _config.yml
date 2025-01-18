@@ -1,3 +1,5 @@
 title: Jerry Zhang Photography
-theme: minima
+show_downloads: true
+google_analytics:
+theme: jekyll-theme-cayman
 description: This is my GitHub Pages site powered by Jekyll.
