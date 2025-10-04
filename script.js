@@ -154,7 +154,17 @@ lightboxNext.addEventListener('click', () => {
     stopSlideshow();
     showNextImage();
 });
-lightboxPlay.addEventListener('click', toggleSlideshow);
+
+// Play button event listener with error checking
+if (lightboxPlay) {
+    lightboxPlay.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent event from bubbling
+        console.log('Play button clicked'); // Debug log
+        toggleSlideshow();
+    });
+} else {
+    console.error('Play button not found!');
+}
 
 // Close lightbox when clicking outside the image
 lightbox.addEventListener('click', (e) => {
