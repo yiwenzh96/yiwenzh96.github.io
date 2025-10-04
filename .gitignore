@@ -1,0 +1,9 @@
+# Image optimization scripts
+optimize-images.sh
+finalize-optimization.sh
+
+# Original image backups
+images/originals_backup/
+
+# macOS files
+.DS_Store
