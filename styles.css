@@ -256,8 +256,9 @@ section {
 }
 
 .photo-gallery {
-    column-count: 3;
-    column-gap: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 4px;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -265,24 +266,23 @@ section {
 .photo-item {
     position: relative;
     overflow: hidden;
-    border-radius: 10px;
     background: var(--light-bg);
     cursor: pointer;
-    margin-bottom: 1.5rem;
-    break-inside: avoid;
-    display: inline-block;
-    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 0;
 }
 
 .photo-img {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
+    object-fit: cover;
     transition: var(--transition);
 }
 
 .photo-item:hover .photo-img {
     transform: scale(1.05);
+    filter: brightness(0.9);
 }
 
 .photo-overlay {
@@ -479,7 +479,8 @@ section {
     }
 
     .photo-gallery {
-        column-count: 2;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 3px;
     }
 
     .research-areas {
@@ -498,6 +499,7 @@ section {
     }
 
     .photo-gallery {
-        column-count: 1;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px;
     }
 }
