@@ -166,7 +166,7 @@ body {
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    opacity: 0; /* Set to 0.3-0.5 to show the image */
+    opacity: 0.4; /* Set to 0.3-0.5 to show the image */
     transition: opacity 0.3s ease;
     z-index: 0;
 }
