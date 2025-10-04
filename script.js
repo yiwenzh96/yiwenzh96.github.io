@@ -54,9 +54,12 @@ const lightboxClose = document.getElementById('lightbox-close');
 const lightboxPrev = document.getElementById('lightbox-prev');
 const lightboxNext = document.getElementById('lightbox-next');
 const lightboxCounter = document.getElementById('lightbox-counter');
+const lightboxPlay = document.getElementById('lightbox-play');
 
 let currentImageIndex = 0;
 let allImages = [];
+let slideshowInterval = null;
+let isPlaying = false;
 
 // Initialize lightbox - will be called in DOMContentLoaded at bottom
 function initializeLightbox() {
@@ -81,6 +84,7 @@ function openLightbox(index) {
 }
 
 function closeLightbox() {
+    stopSlideshow();
     lightbox.classList.remove('active');
     document.body.style.overflow = ''; // Restore scrolling
 }
@@ -103,10 +107,54 @@ function showNextImage() {
     updateLightboxImage();
 }
 
+// Slideshow functionality
+function startSlideshow() {
+    if (!isPlaying) {
+        isPlaying = true;
+        lightboxPlay.textContent = '⏸';
+        lightboxPlay.classList.add('playing');
+        lightboxPlay.title = 'Pause slideshow';
+
+        // Auto-advance every 3 seconds
+        slideshowInterval = setInterval(() => {
+            showNextImage();
+        }, 3000);
+    }
+}
+
+function stopSlideshow() {
+    if (isPlaying) {
+        isPlaying = false;
+        lightboxPlay.textContent = '▶';
+        lightboxPlay.classList.remove('playing');
+        lightboxPlay.title = 'Play slideshow';
+
+        if (slideshowInterval) {
+            clearInterval(slideshowInterval);
+            slideshowInterval = null;
+        }
+    }
+}
+
+function toggleSlideshow() {
+    if (isPlaying) {
+        stopSlideshow();
+    } else {
+        startSlideshow();
+    }
+}
+
 // Event listeners for lightbox controls
 lightboxClose.addEventListener('click', closeLightbox);
-lightboxPrev.addEventListener('click', showPrevImage);
-lightboxNext.addEventListener('click', showNextImage);
+lightboxPrev.addEventListener('click', () => {
+    stopSlideshow();
+    showPrevImage();
+});
+lightboxNext.addEventListener('click', () => {
+    stopSlideshow();
+    showNextImage();
+});
+lightboxPlay.addEventListener('click', toggleSlideshow);
 
 // Close lightbox when clicking outside the image
 lightbox.addEventListener('click', (e) => {
@@ -122,9 +170,14 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         closeLightbox();
     } else if (e.key === 'ArrowLeft') {
+        stopSlideshow();
         showPrevImage();
     } else if (e.key === 'ArrowRight') {
+        stopSlideshow();
         showNextImage();
+    } else if (e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault(); // Prevent page scroll
+        toggleSlideshow();
     }
 });
 
