@@ -236,25 +236,30 @@ body {
 }
 
 .btn-primary {
-    background: var(--accent-color);
-    color: var(--bg-primary);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.8);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-    opacity: 0.9;
+    background: rgba(255, 255, 255, 0.25);
+    border-color: #ffffff;
 }
 
 .btn-secondary {
-    background: transparent;
-    color: var(--text-primary);
-    border: 2px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.8);
 }
 
 .btn-secondary:hover {
-    background: var(--bg-secondary);
-    border-color: var(--accent-color);
+    background: rgba(255, 255, 255, 0.25);
+    border-color: #ffffff;
 }
 
 /* Section Styles */
