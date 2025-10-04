@@ -47,14 +47,85 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Photo Gallery - Optional: Add lightbox functionality later
-const photoItems = document.querySelectorAll('.photo-item');
+// Lightbox functionality
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const lightboxClose = document.getElementById('lightbox-close');
+const lightboxPrev = document.getElementById('lightbox-prev');
+const lightboxNext = document.getElementById('lightbox-next');
+const lightboxCounter = document.getElementById('lightbox-counter');
 
-photoItems.forEach(item => {
-    item.addEventListener('click', () => {
-        // Placeholder for future lightbox implementation
-        console.log('Photo clicked - you can add lightbox functionality here');
+let currentImageIndex = 0;
+let allImages = [];
+
+// Initialize lightbox - will be called in DOMContentLoaded at bottom
+function initializeLightbox() {
+    // Collect all photo images
+    const photoImages = document.querySelectorAll('.photo-img');
+    allImages = Array.from(photoImages);
+
+    // Add click event to each photo
+    photoImages.forEach((img, index) => {
+        img.parentElement.addEventListener('click', (e) => {
+            e.preventDefault();
+            openLightbox(index);
+        });
     });
+}
+
+function openLightbox(index) {
+    currentImageIndex = index;
+    updateLightboxImage();
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+}
+
+function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = ''; // Restore scrolling
+}
+
+function updateLightboxImage() {
+    if (allImages.length > 0) {
+        lightboxImg.src = allImages[currentImageIndex].src;
+        lightboxImg.alt = allImages[currentImageIndex].alt;
+        lightboxCounter.textContent = `${currentImageIndex + 1} / ${allImages.length}`;
+    }
+}
+
+function showPrevImage() {
+    currentImageIndex = (currentImageIndex - 1 + allImages.length) % allImages.length;
+    updateLightboxImage();
+}
+
+function showNextImage() {
+    currentImageIndex = (currentImageIndex + 1) % allImages.length;
+    updateLightboxImage();
+}
+
+// Event listeners for lightbox controls
+lightboxClose.addEventListener('click', closeLightbox);
+lightboxPrev.addEventListener('click', showPrevImage);
+lightboxNext.addEventListener('click', showNextImage);
+
+// Close lightbox when clicking outside the image
+lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+        closeLightbox();
+    }
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('active')) return;
+
+    if (e.key === 'Escape') {
+        closeLightbox();
+    } else if (e.key === 'ArrowLeft') {
+        showPrevImage();
+    } else if (e.key === 'ArrowRight') {
+        showNextImage();
+    }
 });
 
 // Intersection Observer for fade-in animations
@@ -72,10 +143,13 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Observe research cards and photo items for animation
+// Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    const animatedElements = document.querySelectorAll('.research-card, .photo-item');
+    // Initialize lightbox
+    initializeLightbox();
 
+    // Setup fade-in animations for research cards and photo items
+    const animatedElements = document.querySelectorAll('.research-card, .photo-item');
     animatedElements.forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
