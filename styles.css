@@ -304,9 +304,26 @@ section {
 }
 
 .about-content {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
-    text-align: center;
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.bio-profile-pic {
+    width: 250px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 3px solid var(--accent-color);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    transition: var(--transition);
+}
+
+.bio-profile-pic:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
 }
 
 .about-bio {
@@ -799,6 +816,20 @@ section {
 
     .timeline-marker {
         left: 5px;
+    }
+
+    .about-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .bio-profile-pic {
+        width: 200px;
+        margin-bottom: 1.5rem;
+    }
+
+    .about-text {
+        text-align: center;
     }
 }
 
