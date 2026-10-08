@@ -511,6 +511,34 @@ section {
     margin-bottom: 1rem;
 }
 
+.publications {
+    max-width: 900px;
+    margin: 3rem auto 0;
+}
+
+.publications-title {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.publication-list {
+    padding-left: 1.5rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.publication-list li {
+    margin-bottom: 0.75rem;
+}
+
+.publication-note {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
 /* Photography Section */
 .photography {
     background: var(--bg-primary);
